@@ -8,3 +8,4 @@ The following components are covered:
 [Tiller](tiller.md)  
 [kubeadm](kubeadm.md)  
 [CentOS Setup](centos.md)  
+[Dashboard Setup](dashboard.md)  
