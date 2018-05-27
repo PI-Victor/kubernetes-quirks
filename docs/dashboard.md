@@ -1,20 +1,31 @@
 Kubernetes Dashboard
 ---
+For metrics to be available, [heapster](./heapster.md) needs to be deployed.  
 
-Log in to the dashboard when RBAC is enabled:
 
-After installing `heapster`, the service account linked to the dashboard is `kubernetes-dashboard` in `kube-system`.
+
 ```
-kubectl describe sa kubernetes-dashboard
-Name:                kubernetes-dashboard
-Namespace:           kube-system
-Labels:              k8s-app=kubernetes-dashboard
-Image pull secrets:  <none>
-Mountable secrets:   kubernetes-dashboard-token-qwwwj
-Tokens:              kubernetes-dashboard-token-qwwwj
-Events:              <none>
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
-The token can be found base64 encoded in the secret (e.g. `kubernetes-dashboard-token-qwwwj`) mapped to the service account above.
-Get the token from the secret and use base64 to decode it. That can be used to log in to
-the kubernetes dashboard.  
+Create a service account for accessing the dashboard -
+either by following instructions from the [kubernetes dashboard repo](https://github.com/kubernetes/dashboard/wiki/Creating-sample-user)
+or via
+
+```
+kubectl create -f assets/dashboard.yaml
+```
+
+Get the bearer token needed to log in.  
+```
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+
+```
+
+**NOTE:**  
+Remember to set up proxying for kubernetes-dashboard access, since the service
+is only exposed at cluster level.  
+```
+kubectl proxy
+Starting to serve on 127.0.0.1:8001
+```
