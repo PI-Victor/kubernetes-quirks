@@ -16,5 +16,5 @@ Events:              <none>
 ```
 
 The token can be found base64 encoded in the secret (e.g. `kubernetes-dashboard-token-qwwwj`) mapped to the service account above.
-Get the token from the secret and use bas64 to decode it. That can be used to log in to
+Get the token from the secret and use base64 to decode it. That can be used to log in to
 the kubernetes dashboard.  
